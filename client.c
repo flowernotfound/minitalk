@@ -39,15 +39,14 @@ int main(int ac, char **av)
 	// 不正な引数
 	if (ac != 3)
 	{
-		printf("error");
-		return (0);
+		return (1);
 	}
 
 	// サーバーのPID取得
 	pid_server = atoi(av[1]);
 	if (pid_server <= 0)
 		return (1);
-	printf("%d", pid_server);
+	// printf("%d", pid_server);
 
 	i = 0;
 	while (av[2][i])
