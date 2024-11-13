@@ -5,12 +5,21 @@
 
 void receive_signal(int sig)
 {
+	static int count;
+
+	count = 0;
 	// SIGUSR1の場合
 	if (sig == SIGUSR1)
 	{
 
 	}	// SIGUSR2の場合
 	else if (sig ==SIGUSR2)
+	{
+
+	}
+
+	// 8ビット揃った時には書き出してバッファをリセット
+	if (count == 8)
 	{
 
 	}
