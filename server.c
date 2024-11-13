@@ -3,19 +3,46 @@
 #include <stdlib.h>
 #include <signal.h>
 
+void receive_signal(int sig)
+{
+	// SIGUSR1の場合
+	if (sig == SIGUSR1)
+	{
+
+	}	// SIGUSR2の場合
+	else if (sig ==SIGUSR2)
+	{
+
+	}
+}
+
 int main(void)
 {
+	struct sigaction sa;
 	pid_t pid;
 
-	pid =getpid();
-	printf("%d\n", pid);
 	// プロセスのIDを取得
-	// プロセスIDを表示
+	pid = getpid();
 
-	//　クライアントからメッセージを受け取る
+	// プロセスIDを表示
+	printf("%d\n", pid);
 
 	// シグナル処理の設定
-	// シグナルからデコードする
-	// 	複数のクライアントからメッセージを受け取れるようにする　非同期で処理
+	sa.sa_handler = receive_signal;
+	sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+	{
+		return (1);
+	}
+	if (sigaction(SIGUSR2, &sa, NULL) == -1)
+	{
+		return (1);
+	}
+
+	while (1)
+	{
+		pause();
+	}
 	return 0;
 }
