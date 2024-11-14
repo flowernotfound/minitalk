@@ -25,18 +25,24 @@ void convert_and_send_signal(int pid, char c)
 		if (c & (1 << bit_position))
 		{
 			if (kill(pid, SIGUSR1) == -1)
+			{
+				printf("Failed to send signal\n"); //debug
 				exit(1);
+			}
 		}
 		else
 		{
 			if (kill(pid, SIGUSR2) == -1)
-				exit(1);
+			{
+		        printf("Failed to send signal\n");//debug
+        	    exit(1);
+			}
 		}
 
 		usleep(100);
 		bit_position--;
 	}
-
+	usleep(100);
 }
 
 int main(int ac, char **av)
@@ -58,11 +64,15 @@ int main(int ac, char **av)
     sigemptyset(&sa.sa_mask);
     if (sigaction(SIGUSR1, &sa, NULL) == -1)
         return (1);
+    if (sigaction(SIGUSR2, &sa, NULL) == -1)
+        return (1);
 
 	len = 0;
 	while (av[2][len])
 		len++;
 	printf("Sent: %d\n", len);
+
+	g_received_count = 0; //これ多分いらない
 
 	i = 0;
 	while (av[2][i])

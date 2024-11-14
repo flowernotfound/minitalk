@@ -11,8 +11,12 @@ void receive_signal(int sig, siginfo_t *info, void *context)
 
 	(void)context;
 
-	if (!client_pid)
-		client_pid = info->si_pid;
+    if (info->si_pid != client_pid) //ここちゃんと書き換えないとクライアントのプロセスIDが更新されなくて複数回の実行で不具合出る
+    { // 今は問題なし
+        client_pid = info->si_pid;
+        count_bit = 0;
+        current_byte = 0;
+    }
 
 	if (sig == SIGUSR1)
 		current_byte |= (1 << (7 - count_bit));
@@ -22,7 +26,8 @@ void receive_signal(int sig, siginfo_t *info, void *context)
 	{
 		write(1, &current_byte, 1);
 		// 応答
-		kill(client_pid, SIGUSR1);
+		if (kill(client_pid, SIGUSR1) == -1)
+            printf("Failed to send confirmation\n"); //debug
 		count_bit = 0;
 		current_byte = 0;
 	}
