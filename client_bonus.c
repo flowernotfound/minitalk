@@ -3,6 +3,17 @@
 #include <stdlib.h>
 #include <signal.h>
 
+static int g_received_count = 0;
+
+void received_confirmation(int sig, siginfo_t *info, void *context)
+{
+	(void)info;
+	(void)context;
+
+	if (sig == SIGUSR1)
+		g_received_count++;
+}
+
 void convert_and_send_signal(int pid, char c)
 {
 	int bit_position;
@@ -30,8 +41,10 @@ void convert_and_send_signal(int pid, char c)
 
 int main(int ac, char **av)
 {
+	struct sigaction sa;
 	pid_t pid_server;
 	int i;
+	int len;
 
 	if (ac != 3)
 		return (1);
@@ -40,12 +53,26 @@ int main(int ac, char **av)
 	if (pid_server <= 0)
 		return (1);
 
+	sa.sa_sigaction = received_confirmation;
+    sa.sa_flags = SA_SIGINFO;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIGUSR1, &sa, NULL) == -1)
+        return (1);
+
+	len = 0;
+	while (av[2][len])
+		len++;
+	printf("Sent: %d\n", len);
+
 	i = 0;
 	while (av[2][i])
 	{
 		convert_and_send_signal(pid_server, av[2][i]);
 		i++;
 	}
+
+	usleep(len * 100);
+	printf("Received:  %d\n", g_received_count);
 
 	return 0;
 }
