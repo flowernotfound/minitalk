@@ -6,30 +6,56 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:18:27 by hiroaki           #+#    #+#             */
-/*   Updated: 2024/11/16 15:34:01 by hiroaki          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:17:25 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minitalk_bonus.h"
 
-int	ft_atoi(char *str)
+static int	validate_and_convert(char *str, int *i, int *sign)
 {
-	int	i;
-	int	num;
-
-	i = 0;
-	num = 0;
-	while (str[i] != '\0')
+	*i = 0;
+	*sign = 1;
+	if (str[*i] == '-')
 	{
-		if (48 <= str[i] && str[i] <= 57)
+		*sign = -1;
+		(*i)++;
+	}
+	return (0);
+}
+
+static long	process_digits(char *str, int *i)
+{
+	long	num;
+
+	num = 0;
+	while (str[*i] != '\0')
+	{
+		if (str[*i] >= '0' && str[*i] <= '9')
 		{
-			num = num * 10 + str[i] - 48;
-			i++;
+			if ((num * 10 + (str[*i] - '0')) > INT_MAX)
+				exit(EXIT_FAILURE);
+			num = num * 10 + (str[*i] - '0');
+			(*i)++;
 		}
 		else
 			exit(EXIT_FAILURE);
 	}
 	return (num);
+}
+
+int	ft_atoi(char *str)
+{
+	int		i;
+	int		sign;
+	long	num;
+
+	validate_and_convert(str, &i, &sign);
+	num = process_digits(str, &i);
+	num *= sign;
+	if (num > INT_MAX || num < INT_MIN)
+		exit(EXIT_FAILURE);
+	return ((int)num);
 }
 
 void	ft_putchar(char c)

@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:18:37 by hiroaki           #+#    #+#             */
-/*   Updated: 2024/11/16 15:18:38 by hiroaki          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:09:53 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 int		ft_atoi(char *str);
 void	ft_putnbr(int n);

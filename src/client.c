@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:18:23 by hiroaki           #+#    #+#             */
-/*   Updated: 2024/11/16 15:45:40 by hiroaki          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:19:10 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	main(int ac, char **av)
 {
 	struct sigaction	sa;
 	pid_t				pid_server;
-	char				current_char;
 
 	if (ac != 3)
 		return (0);
@@ -81,6 +80,5 @@ int	main(int ac, char **av)
 	if (sigaction(SIGUSR1, &sa, NULL) == -1)
 		return (1);
 	send_string(pid_server, av[2]);
-	write(1, "Received!\n", 10);
 	return (0);
 }
