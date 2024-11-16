@@ -1,4 +1,4 @@
-#include "../inc/minitalk_bonus.h"
+#include "../inc/minitalk.h"
 
 volatile sig_atomic_t g_response = 0;
 
