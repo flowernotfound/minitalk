@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:18:23 by hiroaki           #+#    #+#             */
-/*   Updated: 2024/11/16 16:19:18 by hiroaki          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:31:31 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@ static void	set_flag(int sig, siginfo_t *siginfo, void *context)
 	(void)siginfo;
 	(void)context;
 	g_response = 1;
+}
+
+static void	wait_response(void)
+{
+	int	timeout;
+
+	timeout = 0;
+	while (g_response != 1)
+	{
+		if (timeout++ > 100000)
+			exit(EXIT_FAILURE);
+		usleep(50);
+	}
+	g_response = 0;
 }
 
 static void	send_char(int pid_server, int c)
@@ -43,9 +57,7 @@ static void	send_char(int pid_server, int c)
 				exit(EXIT_FAILURE);
 		}
 		bit_position++;
-		while (g_response != 1)
-			usleep(50);
-		g_response = 0;
+		wait_response();
 	}
 }
 
