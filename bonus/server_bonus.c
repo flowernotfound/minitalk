@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 15:18:16 by hiroaki           #+#    #+#             */
-/*   Updated: 2024/11/16 15:33:20 by hiroaki          ###   ########.fr       */
+/*   Updated: 2024/11/16 16:43:00 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	receive_signal(int sig, siginfo_t *siginfo, void *context)
 
 static void	print_pid(pid_t pid_server)
 {
-	write(1, "PID: ", 12);
+	write(1, "PID: ", 5);
 	ft_putnbr(pid_server);
 	write(1, "\n", 1);
 }
