@@ -7,3 +7,4 @@ server
 server_bonus
 /minitalk-Tester
 *.o
+/.vscode

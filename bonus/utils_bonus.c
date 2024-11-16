@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/16 15:18:27 by hiroaki           #+#    #+#             */
+/*   Updated: 2024/11/16 15:20:14 by hiroaki          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minitalk_bonus.h"
 
-int	ft_atoi(char *str) // only positive numbers
+int	ft_atoi(char *str)
 {
 	int	i;
 	int	num;
